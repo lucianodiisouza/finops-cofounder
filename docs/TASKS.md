@@ -37,7 +37,8 @@
 | Tarefa | Status | Notas |
 |--------|--------|-------|
 | Tela de login / cadastro | Done | |
-| Painel do mês (total, variação, lista de projetos) | Done | |
+| Painel do mês (total, variação, cartão por projeto) | Done | Um cartão por projeto com custo, variação própria e gráfico de 12 meses |
+| Alternância de escala dos gráficos do painel | Done | Comparável (padrão) ou própria de cada projeto |
 | Tela de projeto (serviços, categorias, gráfico) | Done | |
 | Tela de evolução mês a mês | Done | |
 | Tela de cotações de moeda | Done | |
@@ -52,7 +53,8 @@
 | Testes Go: cálculo de custos | Done | `internal/costing` — conversão, rateio anual, vigência |
 | Testes Go: handlers da API | Done | Inclui isolamento entre usuários em projetos, serviços e cotações |
 | Testes Go: autenticação e configuração | Done | Hash de senha, cookie, variáveis de ambiente |
-| Testes Vitest: componentes e formatação | Done | 77 testes em 9 arquivos |
+| Testes Vitest: componentes e formatação | Done | 88 testes em 10 arquivos |
+| Testes Vitest: painel do mês | Done | Cartões por projeto, variação própria, alternância de escala |
 | Typecheck do frontend | Done | `npm run typecheck` |
 | Verificação visual (screenshots Playwright) | Done | `e2e/screenshots.mjs` — 4 telas × 2 temas × desktop e celular |
 | Guarda automática contra rolagem horizontal | Done | Falha a captura se a página vazar da tela |

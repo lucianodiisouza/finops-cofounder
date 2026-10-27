@@ -36,6 +36,18 @@ traz a mesma informação em tabela.
   regras de marca adotadas (ponta arredondada de 4px, folga de 2px entre segmentos,
   grade recessiva, legenda a partir de duas séries).
 
+## Escala dos gráficos lado a lado
+
+O painel mostra um gráfico por projeto, lado a lado. Gráficos assim só podem ser
+comparados entre si se compartilharem o eixo, e é esse o padrão. Mas com uma escala
+comum um projeto que representa 4% do total vira um traço, e a variação dele fica
+ilegível — exatamente o que o usuário quer enxergar.
+
+Em vez de escolher um dos lados em silêncio, a tela expõe a alternância entre
+*Comparável* e *Própria* e escreve embaixo dos cartões o que cada uma significa.
+O padrão é a escala comum, que é a leitura honesta; quem precisa inspecionar um
+projeto pequeno troca explicitamente, ciente de que perdeu a comparabilidade.
+
 ## Trade-offs
 **Pros:**
 - Identidade visual coesa e distinta.

@@ -57,7 +57,20 @@ início futura só começam a contar a partir daquele mês.
 - Seletor de mês (padrão: mês atual).
 - **Total do mês** em BRL, somando todos os projetos ativos.
 - Comparação com o mês anterior (variação em R$ e em %).
-- Lista de projetos ordenada por custo, com o valor mensal de cada um e sua participação (%) no total.
+- **Um cartão por projeto**, ordenados do mais caro para o mais barato, cada um com:
+  - nome e cor do projeto;
+  - custo do mês e participação (%) no total;
+  - variação do próprio projeto sobre o mês anterior (em R$), em vermelho quando o
+    custo sobe e em verde quando cai;
+  - quantidade de serviços;
+  - gráfico de evolução dos últimos 12 meses só daquele projeto.
+- **Escala dos gráficos**, alternável entre:
+  - *Comparável* (padrão): todos os cartões usam o mesmo eixo, então as alturas podem
+    ser comparadas diretamente entre projetos;
+  - *Própria*: cada cartão usa o próprio eixo, o que torna visível a variação de
+    projetos pequenos, ao custo de não poderem ser comparados entre si.
+  A interface diz qual das duas está ativa e o que isso significa, para a leitura
+  nunca ser ambígua.
 - Aviso quando houver serviços sem cotação disponível.
 
 ### 6. Detalhe do Projeto

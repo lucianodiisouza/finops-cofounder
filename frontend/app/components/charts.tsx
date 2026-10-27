@@ -57,9 +57,25 @@ type EvolutionChartProps = {
   isDark: boolean;
   /** "stacked" empilha por projeto; "total" desenha uma série só. */
   mode?: "stacked" | "total";
+  /** Cor da série única. Só vale no modo "total"; o padrão é a cor de destaque. */
+  color?: string;
+  /**
+   * Teto do eixo imposto de fora, em centavos. Usado quando vários gráficos
+   * aparecem lado a lado e precisam compartilhar a escala para serem comparáveis.
+   */
+  fixedMax?: number;
+  /** Versão reduzida, para caber dentro de um cartão. */
+  compact?: boolean;
 };
 
-export function EvolutionChart({ points, isDark, mode = "stacked" }: EvolutionChartProps) {
+export function EvolutionChart({
+  points,
+  isDark,
+  mode = "stacked",
+  color,
+  fixedMax,
+  compact = false,
+}: EvolutionChartProps) {
   const [hovered, setHovered] = useState<number | null>(null);
 
   // Séries na ordem de maior custo acumulado, para a legenda e a pilha ficarem estáveis.
@@ -80,15 +96,23 @@ export function EvolutionChart({ points, isDark, mode = "stacked" }: EvolutionCh
       .sort((a, b) => b.total - a.total || a.name.localeCompare(b.name));
   }, [points]);
 
-  const { max, values: gridValues } = niceScale(Math.max(...points.map((p) => p.total_cents), 1));
-  const width = 720;
-  const height = 260;
-  const padding = { top: 16, right: 12, bottom: 30, left: 62 };
+  const highest = Math.max(fixedMax ?? 0, ...points.map((p) => p.total_cents), 1);
+  const { max, values: gridValues } = niceScale(highest, compact ? 2 : 4);
+  // A largura reduzida é calibrada para o gráfico caber inteiro dentro de um
+  // cartão na largura de um celular, sem cortar o rótulo do último mês.
+  const width = compact ? 340 : 720;
+  const height = compact ? 150 : 260;
+  const padding = compact
+    ? { top: 12, right: 8, bottom: 24, left: 54 }
+    : { top: 16, right: 12, bottom: 30, left: 62 };
   const plotWidth = width - padding.left - padding.right;
   const plotHeight = height - padding.top - padding.bottom;
   const slot = plotWidth / Math.max(points.length, 1);
-  const barWidth = Math.min(38, slot * 0.6);
+  const barWidth = Math.min(compact ? 22 : 38, slot * 0.6);
   const scale = (cents: number) => (cents / max) * plotHeight;
+  // Na versão reduzida há espaço para poucos rótulos: um a cada três meses,
+  // sempre incluindo o último.
+  const labelEvery = compact ? 3 : 1;
 
   const hoveredPoint = hovered === null ? null : points[hovered];
 
@@ -99,12 +123,12 @@ export function EvolutionChart({ points, isDark, mode = "stacked" }: EvolutionCh
       <div className="overflow-x-auto">
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="w-full min-w-[34rem]"
+        className={compact ? "w-full min-w-[18rem]" : "w-full min-w-[34rem]"}
         role="img"
         aria-label={
           mode === "stacked"
             ? "Custo mensal total, empilhado por projeto"
-            : "Custo mensal total do projeto"
+            : "Custo mensal do projeto, mês a mês"
         }
       >
         {/* Grade recessiva: filetes do livro-caixa. */}
@@ -121,11 +145,11 @@ export function EvolutionChart({ points, isDark, mode = "stacked" }: EvolutionCh
                 strokeWidth={1}
               />
               <text
-                x={padding.left - 10}
+                x={padding.left - 8}
                 y={y + 3.5}
                 textAnchor="end"
                 className="tnum"
-                fontSize={10}
+                fontSize={compact ? 9 : 10}
                 fill="var(--ink-3)"
               >
                 {formatBRLShort(value)}
@@ -173,7 +197,9 @@ export function EvolutionChart({ points, isDark, mode = "stacked" }: EvolutionCh
                 const y = cursor - segmentHeight;
                 cursor -= rawHeight;
                 const fill =
-                  mode === "total" ? "var(--accent)" : seriesColor(segment.color, isDark);
+                  mode === "total"
+                    ? (color ?? "var(--accent)")
+                    : seriesColor(segment.color, isDark);
                 return (
                   <path
                     key={segment.project_id}
@@ -183,15 +209,17 @@ export function EvolutionChart({ points, isDark, mode = "stacked" }: EvolutionCh
                   />
                 );
               })}
-              <text
-                x={padding.left + index * slot + slot / 2}
-                y={height - 10}
-                textAnchor="middle"
-                fontSize={10}
-                fill={isHovered ? "var(--ink)" : "var(--ink-3)"}
-              >
-                {formatMonthShort(point.month)}
-              </text>
+              {(points.length - 1 - index) % labelEvery === 0 && (
+                <text
+                  x={padding.left + index * slot + slot / 2}
+                  y={height - (compact ? 8 : 10)}
+                  textAnchor="middle"
+                  fontSize={compact ? 9 : 10}
+                  fill={isHovered ? "var(--ink)" : "var(--ink-3)"}
+                >
+                  {formatMonthShort(point.month)}
+                </text>
+              )}
             </g>
           );
         })}
@@ -209,7 +237,7 @@ export function EvolutionChart({ points, isDark, mode = "stacked" }: EvolutionCh
       </div>
 
       {hoveredPoint && (
-        <div className="pointer-events-none absolute left-1/2 top-0 z-10 w-60 -translate-x-1/2 rounded-sm border border-rule bg-surface p-3 shadow-[var(--shadow)]">
+        <div className="pointer-events-none absolute left-1/2 top-0 z-10 w-56 -translate-x-1/2 rounded-sm border border-rule bg-surface p-3 shadow-[var(--shadow)] sm:w-60">
           <p className="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-ink-3">
             {formatMonthShort(hoveredPoint.month)}
           </p>
