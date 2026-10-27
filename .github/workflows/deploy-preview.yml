@@ -2,7 +2,9 @@ name: Deploy Preview
 on:
   push:
     branches: [main]
-    paths-ignore: [".claude/**"]
+    # docs/ e e2e/ não entram na imagem publicada: mudanças só neles não
+    # precisam provocar uma republicação.
+    paths-ignore: [".claude/**", "docs/**", "e2e/**"]
   # Permite republicar manualmente, sem precisar de uma mudança no código —
   # útil para refazer uma publicação que falhou por erro transitório da nuvem.
   workflow_dispatch:

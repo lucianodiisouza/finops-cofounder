@@ -21,7 +21,7 @@ Serviços dos quais a aplicação depende além do binário Go.
 
 | Ambiente | Gatilho | Zona | VM da web | VM do banco | Endereço |
 |----------|---------|------|-----------|-------------|----------|
-| preview | push na `main` | ZP01 | `small` (1 vCPU / 2 GiB), disco 20 GB | `small` (1 vCPU / 2 GiB), disco 10 GB | `https://<ip>.nip.io` |
+| preview | push na `main` ou disparo manual | ZP01 | `small` (1 vCPU / 2 GiB), disco 20 GB | `small` (1 vCPU / 2 GiB), disco 10 GB | https://191.252.228.197.nip.io |
 
 - Configuração em `config/deploy.yml` (comum) e `config/deploy.preview.yml` (ambiente).
 - Publicação por `.github/workflows/deploy-preview.yml`; para desfazer o ambiente,
@@ -29,6 +29,21 @@ Serviços dos quais a aplicação depende além do binário Go.
 - O disco de dados fica montado em `/data/` nas duas VMs, com snapshot diário
   automático. O Postgres grava em `/data/pgdata`.
 - HTTPS com certificado Let's Encrypt emitido automaticamente.
+- IPs: web `191.252.228.197` (interno `10.1.1.97`), banco `191.252.228.202`.
+  O IP é estável entre publicações; só muda se o ambiente for desfeito e recriado.
+- Acesso por SSH para diagnóstico: `ssh -i ~/.ssh/finops-cofounder root@191.252.228.197`
+  (sempre com `-i`, nunca a chave padrão).
+
+### Histórico de incidentes
+
+- **2026-10-26 — primeira publicação falhou duas vezes.** A primeira tentativa nem
+  iniciou: o GitHub Actions estava bloqueado por faturamento da conta (repositório
+  era privado, e minutos de automação são pagos nesse caso). O repositório foi
+  tornado público, o que libera minutos gratuitos. A segunda tentativa falhou com
+  `The vm with hostName web already exists`: a API da nuvem criou a VM mas falhou ao
+  responder (`failed to decode response`), e a repetição automática esbarrou na VM
+  que já existia. Solução: `teardown-preview` e nova publicação, que funcionou.
+  Se o erro "already exists" voltar, é o mesmo caso — desfazer e republicar.
 
 ## Variáveis de ambiente
 

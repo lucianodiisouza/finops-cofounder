@@ -74,7 +74,11 @@
 
 | Tarefa | Status | Notas |
 |--------|--------|-------|
-| Deploy no Locaweb Cloud (ambiente de Preview) | In Progress | Workflows e config do Kamal criados; primeira publicação em andamento |
+| Trocar senha por link mágico ou login com Google | Pending | **Recomendado antes de uso prolongado:** senha própria é o elo mais fraco hoje |
+
+| Tarefa | Status | Notas |
+|--------|--------|-------|
+| Deploy no Locaweb Cloud (ambiente de Preview) | Done | No ar em https://191.252.228.197.nip.io |
 | Ambiente de produção com domínio próprio | Pending | Quando o Preview estiver validado |
 | Cotação automática via API externa | Pending | Fora do escopo da v1 |
 | Exportação CSV | Pending | Fora do escopo da v1 |
