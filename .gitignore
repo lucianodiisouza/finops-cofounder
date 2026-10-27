@@ -1,0 +1,19 @@
+# Go build output
+backend/server
+backend/cmd/server/server
+
+# Frontend
+frontend/build/
+frontend/.react-router/
+frontend/node_modules/
+e2e/node_modules/
+e2e/screenshots/
+
+# Python
+.venv/
+
+# Secrets
+.env
+
+# OS / editor
+.DS_Store

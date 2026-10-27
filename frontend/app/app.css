@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   FinOps — estética de livro-caixa: papel quente, filetes finos, números
+   tabulares. Todo componente referencia apenas variáveis, nunca cor literal.
+   A paleta de séries (--series-N) é a paleta categórica validada para
+   daltonismo nos dois modos — ver docs/adr/004-design-system.md.
+--------------------------------------------------------------------------- */
+
+:root {
+  color-scheme: light;
+
+  --paper: #f5f1e8;
+  --surface: #fffdf7;
+  --surface-2: #efeadd;
+  --ink: #1a1814;
+  --ink-2: #5c5648;
+  --ink-3: #8a8172;
+  --rule: #ddd5c4;
+  --rule-strong: #c2b79f;
+  --accent: #1f6f4a;
+  --accent-soft: #e2ece4;
+  --alert: #a93d28;
+  --alert-soft: #f4e3dd;
+  --good: #1f6f4a;
+  --shadow: 0 1px 0 rgb(26 24 20 / 0.04), 0 8px 24px -12px rgb(26 24 20 / 0.18);
+
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #12110e;
+  --surface: #1c1a16;
+  --surface-2: #262319;
+  --ink: #f2ede1;
+  --ink-2: #c4bcab;
+  --ink-3: #8d8578;
+  --rule: #332f26;
+  --rule-strong: #4a4538;
+  --accent: #4fbf8b;
+  --accent-soft: #1e2a23;
+  --alert: #e8705a;
+  --alert-soft: #2d1d18;
+  --good: #4fbf8b;
+  --shadow: 0 1px 0 rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+}
+
+@theme inline {
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-alert: var(--alert);
+  --color-alert-soft: var(--alert-soft);
+  --color-good: var(--good);
+}
+
+html,
+body {
+  background-color: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  /* Textura de papel: ruído sutil que dá matéria ao fundo sem pedir arquivo externo. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Números financeiros sempre em largura fixa, para as colunas alinharem. */
+.tnum {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* Filete do livro-caixa: linha de 1px que separa lançamentos. */
+.rule-row {
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Entrada escalonada no carregamento da página. */
+@keyframes ledger-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.enter {
+  animation: ledger-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter {
+    animation: none;
+  }
+}
+
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--surface);
+}

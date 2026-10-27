@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "cofounder-app-deploy": {
+      "source": "locaweb/cofounder",
+      "sourceType": "github",
+      "skillPath": "skills/cofounder-app-deploy/SKILL.md",
+      "computedHash": "941c8917ba2ea96c4a03ab45b45eb8e7fe140eded0a07a3590ce1a5cbc97de27"
+    },
+    "cofounder-computer-setup": {
+      "source": "locaweb/cofounder",
+      "sourceType": "github",
+      "skillPath": "skills/cofounder-computer-setup/SKILL.md",
+      "computedHash": "162008f8c2eed583e7bacaab97963b55f6c0801120455cbc0c3ce986cfacf5e6"
+    },
+    "cofounder-frontend-design": {
+      "source": "locaweb/cofounder",
+      "sourceType": "github",
+      "skillPath": "skills/cofounder-frontend-design/SKILL.md",
+      "computedHash": "d6af51705fe5862fd7611c0ba1b6b557456bb827a38fadc5e242cb389bc98d9d"
+    },
+    "cofounder-playbook": {
+      "source": "locaweb/cofounder",
+      "sourceType": "github",
+      "skillPath": "skills/cofounder-playbook/SKILL.md",
+      "computedHash": "872682a8593be30ebf1b060b98cffc59f8a2d9926b7aed1ea1b3e61f762f6dbd"
+    },
+    "cofounder-pre-flight-check": {
+      "source": "locaweb/cofounder",
+      "sourceType": "github",
+      "skillPath": "skills/cofounder-pre-flight-check/SKILL.md",
+      "computedHash": "6f21fa1f8087dc570830df12eef7130386da891c6772ce393d143e857126d820"
+    },
+    "cofounder-repo-setup": {
+      "source": "locaweb/cofounder",
+      "sourceType": "github",
+      "skillPath": "skills/cofounder-repo-setup/SKILL.md",
+      "computedHash": "b6b50266fb787d68360f12ba0579bf71441aff2db03e594bcc201a6aab6cb17b"
+    },
+    "cofounder-ssh-key-rotation": {
+      "source": "locaweb/cofounder",
+      "sourceType": "github",
+      "skillPath": "skills/cofounder-ssh-key-rotation/SKILL.md",
+      "computedHash": "c6417eae276dbec5ed7428757ea84218b17e75df07330086ec94a882712c0b16"
+    },
+    "cofounder-tech-stack": {
+      "source": "locaweb/cofounder",
+      "sourceType": "github",
+      "skillPath": "skills/cofounder-tech-stack/SKILL.md",
+      "computedHash": "5ee3f345f14898a432b31cecb4652a4c71ce9154e61f75d703f42d55ee0b70ff"
+    },
+    "cofounder-testing": {
+      "source": "locaweb/cofounder",
+      "sourceType": "github",
+      "skillPath": "skills/cofounder-testing/SKILL.md",
+      "computedHash": "36b46736d063fe35b5e00cf571afc0a0d299d66a4478ce78d02ea3c98d7c3468"
+    }
+  }
+}
