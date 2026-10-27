@@ -1,0 +1,28 @@
+servers:
+  web:
+    hosts:
+      - <%= ENV['INFRA_WEB_IP'] %> # o job de provisionamento exporta INFRA_WEB_IP
+
+env:
+  clear:
+    APP_ENV: preview
+    BASE_URL: https://<%= ENV['INFRA_WEB_IP'] %>.nip.io # trocar por domínio próprio quando houver
+  secret:
+    - DATABASE_URL # derivado de POSTGRES_PASSWORD em .kamal/secrets.preview
+
+proxy:
+  host: <%= ENV['INFRA_WEB_IP'] %>.nip.io
+  ssl: true
+
+accessories:
+  db:
+    image: supabase/postgres:17.11.0.007 # mesma imagem usada no desenvolvimento local
+    host: <%= ENV['INFRA_DB_IP'] %>
+    port: "5432:5432"
+    # Parâmetros gerados para o plano `small` (1 vCPU, 2 GiB) por generate_pg_cmd.py
+    cmd: "postgres -D /etc/postgresql -c shared_buffers=512MB -c effective_cache_size=1536MB -c work_mem=5MB -c maintenance_work_mem=128MB -c max_connections=100"
+    env:
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - /data/pgdata:/var/lib/postgresql/data # sempre sob /data/, que tem snapshot diário

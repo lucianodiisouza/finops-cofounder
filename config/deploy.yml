@@ -1,0 +1,47 @@
+service: <%= ENV['REPO_NAME'] %> # do not change
+image: <%= ENV['REPO_FULL'] %> # do not change
+
+proxy:
+  app_port: 80 # o Dockerfile define PORT=80
+  forward_headers: false # do not change
+  healthcheck:
+    path: /up # GET /up responde 200 assim que as migrations terminam
+    interval: 3
+    timeout: 5
+
+ssh:
+  user: root # do not change
+
+registry:
+  server: ghcr.io
+  username: <%= ENV['REPO_OWNER'] %> # do not change
+  password:
+    - KAMAL_REGISTRY_PASSWORD # do not change
+
+builder: # do not change
+  arch: amd64
+  cache:
+    type: gha
+    # ignore-error=true: GitHub's cache v2 backend (Azure) fails intermittently
+    # ("error writing layer blob: not_found", moby/buildkit#5790); without this
+    # flag a cache hiccup aborts an otherwise-successful deploy.
+    options: mode=max,ignore-error=true
+
+# Sem bloco env aqui: a aplicação não tem variável comum a todos os ambientes, e
+# env.secret nunca pode ficar neste arquivo — listas são substituídas, não
+# mescladas, pelos arquivos de ambiente. Todos os segredos ficam em
+# config/deploy.<ambiente>.yml.
+
+# Sem volumes: o FinOps guarda tudo no Postgres e não escreve arquivos em disco.
+
+# Sem workers: não há processamento em segundo plano.
+
+logging: # evita crescimento ilimitado dos logs nas VMs
+  driver: json-file
+  options:
+    max-size: "50m"
+    max-file: "5"
+
+readiness_delay: 15
+deploy_timeout: 180
+drain_timeout: 30

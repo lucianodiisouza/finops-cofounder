@@ -74,7 +74,8 @@
 
 | Tarefa | Status | Notas |
 |--------|--------|-------|
-| Deploy no Locaweb Cloud (ambiente de Preview) | Pending | Aguardando decisão do usuário |
+| Deploy no Locaweb Cloud (ambiente de Preview) | In Progress | Workflows e config do Kamal criados; primeira publicação em andamento |
+| Ambiente de produção com domínio próprio | Pending | Quando o Preview estiver validado |
 | Cotação automática via API externa | Pending | Fora do escopo da v1 |
 | Exportação CSV | Pending | Fora do escopo da v1 |
 | Alertas de limite de custo por e-mail | Pending | Fora do escopo da v1 |
